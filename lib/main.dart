@@ -1,5 +1,7 @@
+import 'dart:ffi';
 import 'dart:math';
 
+import 'package:despesas/components/chart.dart';
 import 'package:despesas/components/transaction_form.dart';
 import 'package:despesas/components/transaction_list.dart';
 import 'package:despesas/models/transacao.dart';
@@ -17,11 +19,11 @@ class FinanceiroApp extends StatelessWidget {
     return MaterialApp(
       title: 'FinanceiroApp',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-          primarySwatch: Colors.indigo,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+          primarySwatch: Colors.blue,
           fontFamily: 'Quicksand',
           appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.indigo,
+              backgroundColor: Colors.blueAccent,
               titleTextStyle: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Quicksand',
@@ -43,56 +45,63 @@ class HomeApp extends StatefulWidget {
 }
 
 class _HomeAppState extends State<HomeApp> {
-  final List<Transacao> _transactions = [];
-  // Transacao(
-  //   id: 't1',
-  //   titulo: 'Novo Tênis de Corrida',
-  //   valor: 310.76,
-  //   data: DateTime.now(),
-  // ),
-  // Transacao(
-  //   id: 't2',
-  //   titulo: 'Conta de Luz',
-  //   valor: 211.30,
-  //   data: DateTime.now(),
-  // ),
-  // Transacao(
-  //   id: 't2',
-  //   titulo: 'Conta de Luz',
-  //   valor: 211.30,
-  //   data: DateTime.now(),
-  // ),
-  // Transacao(
-  //   id: 't3',
-  //   titulo: 'Conta de Luz',
-  //   valor: 211.30,
-  //   data: DateTime.now(),
-  // ),
-  // Transacao(
-  //   id: 't4',
-  //   titulo: 'Conta de Luz',
-  //   valor: 211.30,
-  //   data: DateTime.now(),
-  // ),
-  // Transacao(
-  //   id: 't5',
-  //   titulo: 'Conta de Luz',
-  //   valor: 211.30,
-  //   data: DateTime.now(),
-  // ),
-  // Transacao(
-  //   id: 't6',
-  //   titulo: 'Conta de Luz',
-  //   valor: 211.30,
-  //   data: DateTime.now(),
-  // ),
-  // Transacao(
-  //   id: 't7',
-  //   titulo: 'Conta de Luz',
-  //   valor: 211.30,
-  //   data: DateTime.now(),
-  // ),
-  // ];
+  final List<Transacao> _transactions = [
+    Transacao(
+      id: 't1',
+      titulo: 'Novo Tênis de Corrida',
+      valor: 310.76,
+      data: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transacao(
+      id: 't2',
+      titulo: 'Conta de Luz',
+      valor: 211.30,
+      data: DateTime.now().subtract(Duration(days: 4)),
+    ),
+    Transacao(
+      id: 't2',
+      titulo: 'Conta de Luz',
+      valor: 211.30,
+      data: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transacao(
+      id: 't3',
+      titulo: 'Conta de Luz',
+      valor: 211.30,
+      data: DateTime.now().subtract(Duration(days: 4)),
+    ),
+    Transacao(
+      id: 't4',
+      titulo: 'Conta de Luz',
+      valor: 211.30,
+      data: DateTime.now().subtract(Duration(days: 1)),
+    ),
+    Transacao(
+      id: 't5',
+      titulo: 'Conta de Luz',
+      valor: 211.30,
+      data: DateTime.now().subtract(Duration(days: 2)),
+    ),
+    Transacao(
+      id: 't6',
+      titulo: 'Conta de Luz',
+      valor: 211.30,
+      data: DateTime.now().subtract(Duration(days: 2)),
+    ),
+    Transacao(
+      id: 't7',
+      titulo: 'Conta de Luz',
+      valor: 211.30,
+      data: DateTime.now().subtract(Duration(days: 4)),
+    ),
+  ];
+
+  List<Transacao> get _recent {
+    return _transactions
+        .where((element) => element.data
+            .isAfter(DateTime.now().subtract(const Duration(days: 7))))
+        .toList();
+  }
 
   _addTrasaction(String titulo, double valor) {
     final newTrasaction = Transacao(
@@ -133,17 +142,11 @@ class _HomeAppState extends State<HomeApp> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(
-            child: Card(
-              elevation: 5.0,
-              child: Text("Grafico"),
-            ),
-          ),
+          Chart(_recent),
           TransactionList(_transactions),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        mini: true,
         child: const Icon(Icons.add),
         onPressed: () {
           _openTransactionFormModal(context);
