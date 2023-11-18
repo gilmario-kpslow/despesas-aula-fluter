@@ -23,7 +23,7 @@ class TransactionList extends StatelessWidget {
                     vertical: 10.0,
                   ),
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black38, width: 2.0),
+                      border: Border.all(color: Colors.indigo, width: 2.0),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(10.0))),
                   padding: const EdgeInsets.all(10.0),
@@ -32,7 +32,6 @@ class TransactionList extends StatelessWidget {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: Colors.purple,
                     ),
                   ),
                 ),
