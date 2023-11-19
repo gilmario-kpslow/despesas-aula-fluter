@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:despesas/components/chart.dart';
@@ -50,49 +49,49 @@ class _HomeAppState extends State<HomeApp> {
       id: 't1',
       titulo: 'Novo Tênis de Corrida',
       valor: 310.76,
-      data: DateTime.now().subtract(Duration(days: 3)),
+      data: DateTime.now().subtract(const Duration(days: 3)),
     ),
     Transacao(
       id: 't2',
       titulo: 'Conta de Luz',
       valor: 211.30,
-      data: DateTime.now().subtract(Duration(days: 4)),
+      data: DateTime.now().subtract(const Duration(days: 4)),
     ),
     Transacao(
       id: 't2',
       titulo: 'Conta de Luz',
       valor: 211.30,
-      data: DateTime.now().subtract(Duration(days: 3)),
+      data: DateTime.now().subtract(const Duration(days: 3)),
     ),
     Transacao(
       id: 't3',
       titulo: 'Conta de Luz',
       valor: 211.30,
-      data: DateTime.now().subtract(Duration(days: 4)),
+      data: DateTime.now().subtract(const Duration(days: 4)),
     ),
     Transacao(
       id: 't4',
       titulo: 'Conta de Luz',
       valor: 211.30,
-      data: DateTime.now().subtract(Duration(days: 1)),
+      data: DateTime.now().subtract(const Duration(days: 1)),
     ),
     Transacao(
       id: 't5',
       titulo: 'Conta de Luz',
       valor: 211.30,
-      data: DateTime.now().subtract(Duration(days: 2)),
+      data: DateTime.now().subtract(const Duration(days: 2)),
     ),
     Transacao(
       id: 't6',
       titulo: 'Conta de Luz',
       valor: 211.30,
-      data: DateTime.now().subtract(Duration(days: 2)),
+      data: DateTime.now().subtract(const Duration(days: 2)),
     ),
     Transacao(
       id: 't7',
       titulo: 'Conta de Luz',
       valor: 211.30,
-      data: DateTime.now().subtract(Duration(days: 4)),
+      data: DateTime.now().subtract(const Duration(days: 4)),
     ),
   ];
 
@@ -103,12 +102,12 @@ class _HomeAppState extends State<HomeApp> {
         .toList();
   }
 
-  _addTrasaction(String titulo, double valor) {
+  _addTrasaction(String titulo, double valor, DateTime data) {
     final newTrasaction = Transacao(
       id: Random().nextDouble().toString(),
       titulo: titulo,
       valor: valor,
-      data: DateTime.now(),
+      data: data,
     );
 
     setState(() {

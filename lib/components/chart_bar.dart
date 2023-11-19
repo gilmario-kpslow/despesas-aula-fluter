@@ -16,11 +16,13 @@ class ChartBar extends StatelessWidget {
     return Column(
       children: [
         // Text('R\$${this.valor.toStringAsFixed(2)}'),
-        FittedBox(child: Text('${this.valor.toStringAsFixed(2)}')),
         SizedBox(
+            height: 20,
+            child: FittedBox(child: Text(valor.toStringAsFixed(2)))),
+        const SizedBox(
           height: 5,
         ),
-        Container(
+        SizedBox(
           height: 60,
           width: 10,
           child: Stack(
@@ -28,7 +30,7 @@ class ChartBar extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1.0),
+                  border: Border.all(color: Colors.grey, width: 0.5),
                   borderRadius: BorderRadius.circular(5),
                   color: const Color.fromRGBO(220, 220, 220, 1),
                 ),
@@ -46,8 +48,8 @@ class ChartBar extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: 5,
+        const SizedBox(
+          height: 10,
         ),
         Text(label)
       ],
