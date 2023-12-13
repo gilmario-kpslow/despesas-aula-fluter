@@ -14,7 +14,7 @@ class _TransactionFormState extends State<TransactionForm> {
   final _tituloController = TextEditingController();
   final _valorController = TextEditingController();
 
-  late DateTime _selectedDate;
+  late DateTime _selectedDate = DateTime.now();
 
   _submitForm() {
     final title = _tituloController.text;
@@ -23,6 +23,7 @@ class _TransactionFormState extends State<TransactionForm> {
     if (title.isEmpty || value <= 0) {
       return;
     }
+
     widget.onSubmit(title, value, _selectedDate);
   }
 
@@ -63,6 +64,7 @@ class _TransactionFormState extends State<TransactionForm> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // ignore: unnecessary_null_comparison
                 Text(_selectedDate == null

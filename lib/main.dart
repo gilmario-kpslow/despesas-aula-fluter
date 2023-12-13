@@ -44,56 +44,7 @@ class HomeApp extends StatefulWidget {
 }
 
 class _HomeAppState extends State<HomeApp> {
-  final List<Transacao> _transactions = [
-    Transacao(
-      id: 't1',
-      titulo: 'Novo Tênis de Corrida',
-      valor: 310.76,
-      data: DateTime.now().subtract(const Duration(days: 3)),
-    ),
-    Transacao(
-      id: 't2',
-      titulo: 'Conta de Luz',
-      valor: 211.30,
-      data: DateTime.now().subtract(const Duration(days: 4)),
-    ),
-    Transacao(
-      id: 't2',
-      titulo: 'Conta de Luz',
-      valor: 211.30,
-      data: DateTime.now().subtract(const Duration(days: 3)),
-    ),
-    Transacao(
-      id: 't3',
-      titulo: 'Conta de Luz',
-      valor: 211.30,
-      data: DateTime.now().subtract(const Duration(days: 4)),
-    ),
-    Transacao(
-      id: 't4',
-      titulo: 'Conta de Luz',
-      valor: 211.30,
-      data: DateTime.now().subtract(const Duration(days: 1)),
-    ),
-    Transacao(
-      id: 't5',
-      titulo: 'Conta de Luz',
-      valor: 211.30,
-      data: DateTime.now().subtract(const Duration(days: 2)),
-    ),
-    Transacao(
-      id: 't6',
-      titulo: 'Conta de Luz',
-      valor: 211.30,
-      data: DateTime.now().subtract(const Duration(days: 2)),
-    ),
-    Transacao(
-      id: 't7',
-      titulo: 'Conta de Luz',
-      valor: 211.30,
-      data: DateTime.now().subtract(const Duration(days: 4)),
-    ),
-  ];
+  final List<Transacao> _transactions = [];
 
   List<Transacao> get _recent {
     return _transactions
