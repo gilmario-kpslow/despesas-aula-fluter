@@ -62,7 +62,7 @@ class _TransactionFormState extends State<TransactionForm> {
             onSubmitted: (_) => _submitForm(),
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10.0),
+            margin: const EdgeInsets.symmetric(vertical: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

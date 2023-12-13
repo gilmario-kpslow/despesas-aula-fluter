@@ -76,6 +76,12 @@ class _HomeAppState extends State<HomeApp> {
         });
   }
 
+  _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((element) => element.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +99,7 @@ class _HomeAppState extends State<HomeApp> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Chart(_recent),
-          TransactionList(_transactions),
+          Expanded(child: TransactionList(_transactions, _deleteTransaction)),
         ],
       ),
       floatingActionButton: FloatingActionButton(
