@@ -84,22 +84,31 @@ class _HomeAppState extends State<HomeApp> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      actions: [
+        IconButton(
+            onPressed: () {
+              _openTransactionFormModal(context);
+            },
+            icon: const Icon(Icons.add))
+      ],
+      title: const Text("Despesas Pessoais"),
+    );
+
+    final avaliableHeigth = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                _openTransactionFormModal(context);
-              },
-              icon: const Icon(Icons.add))
-        ],
-        title: const Text("Despesas Pessoais"),
-      ),
+      appBar: appBar,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Chart(_recent),
-          Expanded(child: TransactionList(_transactions, _deleteTransaction)),
+          SizedBox(height: avaliableHeigth * 0.3, child: Chart(_recent)),
+          SizedBox(
+              height: avaliableHeigth * 0.7,
+              child: Expanded(
+                  child: TransactionList(_transactions, _deleteTransaction))),
         ],
       ),
       floatingActionButton: FloatingActionButton(
