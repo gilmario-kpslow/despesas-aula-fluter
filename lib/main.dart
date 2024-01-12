@@ -15,6 +15,8 @@ class FinanceiroApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
+
     return MaterialApp(
       title: 'FinanceiroApp',
       theme: ThemeData(
@@ -45,6 +47,7 @@ class HomeApp extends StatefulWidget {
 
 class _HomeAppState extends State<HomeApp> {
   final List<Transacao> _transactions = [];
+  bool _showChart = false;
 
   List<Transacao> get _recent {
     return _transactions
@@ -84,32 +87,64 @@ class _HomeAppState extends State<HomeApp> {
 
   @override
   Widget build(BuildContext context) {
+    bool land = MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       actions: [
+        if (land)
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  _showChart = !_showChart;
+                });
+              },
+              icon: _showChart
+                  ? const Icon(Icons.list)
+                  : const Icon(Icons.show_chart)),
         IconButton(
             onPressed: () {
               _openTransactionFormModal(context);
             },
-            icon: const Icon(Icons.add))
+            icon: const Icon(Icons.add)),
       ],
-      title: const Text("Despesas Pessoais"),
+      title: Text(
+        "Despesas Pessoais",
+        style:
+            TextStyle(fontSize: (20 * MediaQuery.of(context).textScaleFactor)),
+      ),
     );
 
-    final avaliableHeigth = MediaQuery.of(context).size.height -
-        appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+    final avaliableHeigth = MediaQuery.of(context).size.height;
+    -appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
     return Scaffold(
       appBar: appBar,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(height: avaliableHeigth * 0.3, child: Chart(_recent)),
-          SizedBox(
-              height: avaliableHeigth * 0.7,
-              child: Expanded(
-                  child: TransactionList(_transactions, _deleteTransaction))),
-        ],
+      body: SingleChildScrollView(
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          // if (land)
+          //   Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       const Text("Exibir Gráfico"),
+          //       Switch(
+          //           value: _showChart,
+          //           onChanged: (v) {
+          //             setState(() {
+          //               _showChart = v;
+          //             });
+          //           }),
+          //     ],
+          //   ),
+          if (_showChart || !land)
+            SizedBox(
+                height: land ? avaliableHeigth * 0.7 : avaliableHeigth * 0.3,
+                child: Chart(_recent)),
+          if (!_showChart || !land)
+            SizedBox(
+                height: avaliableHeigth * 0.7,
+                child: TransactionList(_transactions, _deleteTransaction)),
+        ]),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),

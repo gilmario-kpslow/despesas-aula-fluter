@@ -10,68 +10,73 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: transacoes.isEmpty
-          ? Column(children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Nenhuma transação",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 200,
-                child: Image.asset(
-                  "assets/images/waiting.png",
-                  fit: BoxFit.cover,
+    final vazio = LayoutBuilder(builder: (xtx, constraints) {
+      return Column(children: [
+        SizedBox(
+          height: constraints.maxHeight * 0.05,
+        ),
+        Container(
+          height: constraints.maxHeight * 0.20,
+          child: Text(
+            "Nenhuma transação",
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
+        SizedBox(
+          height: constraints.maxHeight * 0.05,
+        ),
+        SizedBox(
+          height: constraints.maxHeight * 0.50,
+          child: Image.asset(
+            "assets/images/waiting.png",
+            fit: BoxFit.fitHeight,
+          ),
+        ),
+      ]);
+    });
+
+    final lista = ListView.builder(
+        itemCount: transacoes.length,
+        itemBuilder: (context, index) {
+          final tr = transacoes[index];
+          return Card(
+            elevation: 5,
+            margin: const EdgeInsets.symmetric(
+              vertical: 8,
+              horizontal: 5,
+            ),
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.blueAccent,
+                radius: 28,
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: FittedBox(
+                    child: Text(
+                      'R\$ ${tr.valor}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
-              )
-            ])
-          : ListView.builder(
-              itemCount: transacoes.length,
-              itemBuilder: (context, index) {
-                final tr = transacoes[index];
-                return Card(
-                  elevation: 5,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 5,
-                  ),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.blueAccent,
-                      radius: 28,
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: FittedBox(
-                          child: Text(
-                            'R\$ ${tr.valor}',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      tr.titulo,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    subtitle: Text(
-                      DateFormat('d MMM y').format(tr.data),
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        delete(tr.id);
-                      },
-                      color: Theme.of(context).highlightColor,
-                    ),
-                  ),
-                );
-              }),
-    );
+              ),
+              title: Text(
+                tr.titulo,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              subtitle: Text(
+                DateFormat('d MMM y').format(tr.data),
+              ),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  delete(tr.id);
+                },
+                color: Theme.of(context).highlightColor,
+              ),
+            ),
+          );
+        });
+
+    return SizedBox(child: transacoes.isEmpty ? vazio : lista);
   }
 }
