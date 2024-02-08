@@ -104,12 +104,16 @@ class _HomeAppState extends State<HomeApp> {
 
     final titulo = Text(
       "Despesas Pessoais",
-      style: TextStyle(fontSize: (20 * MediaQuery.of(context).textScaleFactor)),
+      style: TextStyle(fontSize: MediaQuery.of(context).textScaler.scale(20)),
     );
+
+    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
+    final chartList =
+        Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
 
     final List<Widget> actions = [
       if (land)
-        _getButton(_showChart ? Icon(Icons.list) : Icon(Icons.show_chart), () {
+        _getButton(_showChart ? Icon(iconList) : Icon(chartList), () {
           setState(() {
             _showChart = !_showChart;
           });
@@ -130,17 +134,20 @@ class _HomeAppState extends State<HomeApp> {
     final avaliableHeigth = MediaQuery.of(context).size.height;
     -appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
-    final body = SingleChildScrollView(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        if (_showChart || !land)
-          SizedBox(
-              height: land ? avaliableHeigth * 0.7 : avaliableHeigth * 0.3,
-              child: Chart(_recent)),
-        if (!_showChart || !land)
-          SizedBox(
-              height: avaliableHeigth * 0.7,
-              child: TransactionList(_transactions, _deleteTransaction)),
-      ]),
+    final body = SafeArea(
+      child: SingleChildScrollView(
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          if (_showChart || !land)
+            SizedBox(
+                height: land ? avaliableHeigth * 0.7 : avaliableHeigth * 0.3,
+                child: Chart(_recent)),
+          if (!_showChart || !land)
+            SizedBox(
+                height: avaliableHeigth * 0.7,
+                child: TransactionList(_transactions, _deleteTransaction)),
+        ]),
+      ),
     );
 
     return Platform.isIOS

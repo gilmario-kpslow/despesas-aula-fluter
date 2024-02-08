@@ -1,3 +1,5 @@
+import 'package:despesas/components/adaptative_button.dart';
+import 'package:despesas/components/adaptative_input_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -51,15 +53,11 @@ class _TransactionFormState extends State<TransactionForm> {
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-          TextField(
-            decoration: const InputDecoration(labelText: "Titulo"),
-            controller: _tituloController,
-          ),
-          TextField(
-            decoration: const InputDecoration(labelText: "Valor R\$"),
+          AdaptativeInputText(label: "Titulo", controller: _tituloController),
+          AdaptativeInputText(
+            label: "Valor R\$",
             controller: _valorController,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            onSubmitted: (_) => _submitForm(),
+            onSubmit: _submitForm,
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10.0),
@@ -70,23 +68,14 @@ class _TransactionFormState extends State<TransactionForm> {
                 Text(_selectedDate == null
                     ? "Nenhuma data selecionada!"
                     : DateFormat('dd/MM/y').format(_selectedDate)),
-                ElevatedButton(
-                    onPressed: _showDatePicker,
-                    child: Text(
-                      "Selecionar Data",
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ))
+                AdaptativeButton(
+                    label: "Selecionar Data", onPress: _showDatePicker)
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-                onPressed: _submitForm,
-                child: const Text(
-                  "Cadastrar",
-                  style: TextStyle(color: Colors.purple),
-                )),
+            child: AdaptativeButton(label: "Cadastrar", onPress: _submitForm),
           )
         ]),
       ),
