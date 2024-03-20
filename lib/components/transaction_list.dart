@@ -15,7 +15,7 @@ class TransactionList extends StatelessWidget {
         SizedBox(
           height: constraints.maxHeight * 0.05,
         ),
-        Container(
+        SizedBox(
           height: constraints.maxHeight * 0.20,
           child: Text(
             "Nenhuma transação",
@@ -66,13 +66,23 @@ class TransactionList extends StatelessWidget {
               subtitle: Text(
                 DateFormat('d MMM y').format(tr.data),
               ),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {
-                  delete(tr.id);
-                },
-                color: Theme.of(context).highlightColor,
-              ),
+              trailing: MediaQuery.of(context).size.width > 400
+                  ? ElevatedButton(
+                      child: Text(
+                        "Excluir",
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      onPressed: () {
+                        delete(tr.id);
+                      },
+                    )
+                  : IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        delete(tr.id);
+                      },
+                      color: Theme.of(context).colorScheme.error,
+                    ),
             ),
           );
         });
